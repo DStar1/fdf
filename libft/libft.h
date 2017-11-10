@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 16:56:52 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/06 16:30:18 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/10 00:21:53 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ char				*ft_strjoin_clr_1st(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 int					get_next_line(const int fd, char **line);
+int					ft_cntdelim(const char *str, int c);
 
 #endif

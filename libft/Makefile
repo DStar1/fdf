@@ -68,6 +68,7 @@ SRC = 	ft_putchar.c \
 		free_array.c \
 		ft_strjoin_clr_1st.c \
 		get_next_line.c \
+		ft_cntdelim.c \
 		ft_lstsize.c
 
 all: $(NAME)

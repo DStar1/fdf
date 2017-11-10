@@ -4,6 +4,8 @@ LIBF = libft/
 
 MAIN = main.c
 
+TEST = 10-2.fdf
+
 SRC =	$(MAIN)
 
 FLAGS = -Wall -Werror -Wextra
@@ -17,7 +19,7 @@ $(NAME):
 
 cmain:
 	gcc -o $(NAME) minilibx/libmlx.a libft/libft.a $(SRC) -framework OpenGL -framework AppKit
-	./mlx test_maps/10-2.fdf
+	./mlx test_maps/$(TEST)
 
 clean:
 	/bin/rm -f *.o

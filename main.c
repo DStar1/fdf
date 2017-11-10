@@ -1,9 +1,5 @@
 #include "fdf.h"
 #include "minilibx/mlx.h"
-//#include "libft/libft.h"
-
-
-//# define RAND_MAX 400
 
 int	my_key_funct(int keycode, t_master *master)
 {
@@ -15,61 +11,76 @@ int	my_key_funct(int keycode, t_master *master)
 	return (0);
 }
 
-t_points		*znc(char **arr, int *len)
+int		*znc(t_points **stmp, char **arr, int *len, int y)
 {
 	int i;
-	//int intarr[2];
 	char **tmp;
-	t_points *stmp;
 
 	i = 0;
-	stmp = (t_points*)malloc(sizeof(t_points) * *len + 1);
-	//stmp[len] = NULL;
 	while (arr[i])
 	{
 		if (ft_strchr(arr[i], ';'))
 		{
 			tmp = ft_strsplit(arr[i], ';');
-			stmp[i].z = ft_atoi(tmp[0]);
-			stmp[i].c = tmp[1]; //ft_atoi(tmp[1]); //or just the string
+			stmp[y][i].z = ft_atoi(tmp[0]);
+			stmp[y][i].c = tmp[1]; //ft_atoi(tmp[1]); //or just the string
+			free(tmp);
 		}
 		else
-			stmp[i].z = ft_atoi(arr[i]);
+			stmp[y][i].z = ft_atoi(arr[i]);
 		i++;
 	}
-	return (stmp);
+	return (0);
+}
+
+void printpoints(int *len, int i, t_points **twodstruct)
+{
+	int y = 0;
+	int x = 0;
+	while (y < i)
+	{
+		x = 0;
+		while (x < *len)
+		{
+			printf("c: %s, z: %d | ", twodstruct[y][x].c, twodstruct[y][x].z); //trying to make a 2d struct array
+			x++;
+		}
+		printf("\n");
+		free(twodstruct[y]);
+		y++;
+	}
 }
 
 int main(int ac, char **av){
 	int		fd;
 	char	*line;
 	int		i;
-	//char **chars;
-	//int **ints;
-	//t_master **master;
-	t_points **twodstruct;
+	t_points *twodstruct[10];
 	t_points **cpy;
-	//int zcolr[2];
-	int *len = 0;
+	int lentmp = 0;
+	int *len;
 	char *tmp;
 	
-	i = 0;
+	i = 1; //i use the tmp var for the first one at index 0
 	line = NULL;
 	if ((fd = open(av[1], O_RDONLY)) == -1)
 		return (0);
 	get_next_line(fd, &line); //check to see if gnl runs
 	tmp = line;
-	*len = ft_strlen(tmp);
-	twodstruct = (t_points**)malloc(sizeof(t_points*) * (*len) + 1); //change len
-	cpy = twodstruct;
+	lentmp = ft_cntdelim(tmp, ' ');
+	*len = lentmp;
+	//ft_putstr(line);
+	////twodstruct = (t_points**)malloc(sizeof(t_points*) * (*len) + 1); //change len to whatever length y is when you find out 
+	twodstruct[0] = (t_points*)malloc(sizeof(t_points) * *len);
+	znc((t_points**)twodstruct, ft_strsplit(line, ' '), len, 0);
 	while ((get_next_line(fd, &line)))
 	{
-		get_next_line(fd, &line);
-		twodstruct[i]->next = znc(ft_strsplit(line, ' '), len);
-		//printf("%d, %s\n", i, line);
+		twodstruct[i] = (t_points*)malloc(sizeof(t_points) * *len);
+		znc((t_points**)twodstruct, ft_strsplit(line, ' '), len, i);
 		i++;
 	}
-	printf("%d\n", cpy[0]->next->z); //trying to make a 2d struct array
+	printpoints(len, i, (t_points**)&twodstruct); //passing the address for freeing
+	//free(twodstruct);
 	//ft_putarr(ints);
 
 	//printf("%d\n", i);
