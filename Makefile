@@ -18,7 +18,7 @@ $(NAME):
 	gcc minilibx/libmlx.a libft/libft.a main.c -framework OpenGL -framework AppKit
 
 cmain:
-	gcc -o $(NAME) minilibx/libmlx.a libft/libft.a $(SRC) -framework OpenGL -framework AppKit
+	gcc -g -o $(NAME) minilibx/libmlx.a libft/libft.a $(SRC) -framework OpenGL -framework AppKit
 	./mlx test_maps/$(TEST)
 
 clean:

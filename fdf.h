@@ -6,13 +6,14 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 20:15:38 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/09 20:28:06 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/10 21:10:14 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include "minilibx/mlx.h"
 # include "libft/libft.h"
 
 typedef struct		s_master
@@ -27,6 +28,8 @@ typedef struct		s_master
 
 typedef struct		s_points
 {
+	int				x;
+	int				y;
 	int				z;
 	char			*c; //supposed to be int
 	void			*content;
