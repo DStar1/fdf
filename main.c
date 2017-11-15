@@ -175,14 +175,22 @@ void draw(t_master *master, t_points **coords, int y11, int x11, int y22, int x2
 }
 
 
-int rotate(t_points ***coords, int degree, int x, int y)
+//dont fully understand how to impliment
+void	rotate(t_points ***coords, int ang, int x, int y)
 {
-	//rotate(&coords, 30, int x, int y);
+	//z
+	int x1 = coords[y][x]->x;
+	int y1 = coords[y][x]->y;
+	coords[y][x]->x = x1 * cos(ang) - y1 * sin(ang);
+	coords[y][x]->y = x1 * sin(ang) + y1 * cos(ang);
+	// coords[y][x]->x = (cos(ang) - sin(ang))*coords[y][x]->x;
+	// coords[y][x]->y = (sin(ang) + cos(ang)) * coords[y][x]->y;
 
-	// coords[y][x].x = sin(30) (coords[y][x].x - 
-	// coords[y][x].y = 
-	return (0);
-}
+	//y
+	//coords[y][x]->x = coords[y][x]->x * cos(ang) + coords[y][x]->z * sin(ang);
+
+
+} //http://graphics.cs.cmu.edu/nsp/course/15-462/Spring04/slides/04-transform.pdf
 
 
 int main(int ac, char **av)
@@ -194,7 +202,7 @@ int main(int ac, char **av)
 	
 	if (ac == 2)
 	{
-		master.wsize = 1000;
+		master.wsize = 400;
 		master.xlen = 0;
 		master.ylen = 0;
 		coords = points(av[1], &master); //added pointer
@@ -207,14 +215,16 @@ int main(int ac, char **av)
 			x = 0;
 			while (x < (master.xlen))
 			{
-				coords[y][x].x = (x + 1) * (master.wsize / (master.xlen + 1));
-				coords[y][x].y = (y + 1) * (master.wsize / (master.ylen + 1));
-				rotate(&coords, 30, x, y);
+				coords[y][x].x = (x + 1) * 20 + 70;//(master.wsize / (master.xlen + 1));
+				coords[y][x].y = (y + 1) * 20 + 70;//(master.wsize / (master.ylen + 1));
+				//printf("((%d, %d):", coords[y][x].y, coords[y][x].x);
+				//rotate(&coords, 45, x, y);
+				//printf("(%d, %d))|", coords[y][x].y, coords[y][x].x);
 				x++;
 			}
 			y++;
 		}
-				//printf("%d, %d\n", master.ylen, master.xlen);
+				printf("%d, %d\n", master.ylen, master.xlen);
 		//		printf("(%d, %d) |\n", coords[1][1].y, coords[1][1].x);
 		y = 0;
 		while(y < master.ylen)

@@ -6,13 +6,14 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 20:15:38 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/14 18:07:46 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/15 14:35:18 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include <math.h>
 # include "libft/libft.h"
 # include "minilibx/mlx.h"
 
