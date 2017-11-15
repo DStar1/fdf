@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 20:15:38 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/11 19:05:07 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/14 18:07:46 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ typedef struct		s_master
 
 typedef struct		s_points
 {
-	int				x;
-	int				y;
-	int				z;
+	double				x;
+	double				y;
+	double				z;
 	char			*c; //supposed to be int
 	void			*content;
 	struct s_points	*next;

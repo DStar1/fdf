@@ -7,15 +7,7 @@ int	my_key_funct(int keycode, t_master *master)
 	// int y = 300;
 	if (keycode == 53)
 		exit(1);
-	// if (keycode == 124) //right pressed
-	// 	//coords[y][x].x++;
-	// if (keycode == 123) //left pressed
-	// 	coords[y][x].x--;
-	// if (keycode == 126) //up pressed
-	// 	coords[y][x].y++;
-	// if (keycode == 125) //down pressed
-	// 	coords[y][x].y--;
-	//mlx_pixel_put(master->mlx, master->win, rand()%400, rand()%400, 16711935);//0xFF00FF); //use struct
+	mlx_pixel_put(master->mlx, master->win, rand()%400, rand()%400, 16711935);//0xFF00FF); //use struct
 	return (0);
 }
 
@@ -79,7 +71,7 @@ t_points **points(char *filename, t_master *master){
 	while (get_next_line(fd, &line))
 		(master->ylen)++;
 	close(fd);
-	twodstruct = (t_points**)malloc(sizeof(t_points*) * master->ylen);
+	twodstruct = (t_points**)malloc(sizeof(t_points*) * y);
 //////////////////
 
 	y = 1; //y use the tmp var for the first one at index 0
@@ -89,7 +81,7 @@ t_points **points(char *filename, t_master *master){
 	get_next_line(fd, &line); //check to see if gnl runs
 	tmp = line;
 	master->xlen = ft_cntdelim(tmp, ' ');
-	twodstruct[0] = (t_points*)ft_memalloc(sizeof(t_points) * master->xlen);
+	twodstruct[0] = (t_points*)malloc(sizeof(t_points) * master->xlen);
 	znc((t_points**)twodstruct, ft_strsplit(line, ' '), &master->xlen, 0);
 	while ((get_next_line(fd, &line)))
 	{
@@ -104,14 +96,40 @@ t_points **points(char *filename, t_master *master){
 	return ((t_points**)twodstruct);
 }
 
-void draw(t_master *master, t_points **coords, int y11, int x11, int y22, int x22)
+void draw(t_master *master, t_points **coords, int y1, int x1, int y2, int x2, int yox)
 {
 ////////////////////writes line to the screen//////////////////
-	int x1 = coords[y11][x11].x;
-	int y1 = coords[y11][x11].y;
-	int x2 = coords[y22][x22].x;
-	int y2 = coords[y22][x22].y;
-	printf("(%d, %d) || (%d, %d)\n", y1, x1, y2, x2);
+	// int x1 = 0;
+    // int y1 = 0;
+    // int x2 = 100;
+    // int y2 = 250;
+	//int x2;
+    //int y2;
+	//x2 = coords[y1][x1 + 1].x;
+	//ft_putnbr(x2);
+	//ft_putchar('\n');
+	//x2 = x2 * 10;
+	//y2 = y1; //coords[y1][x1];
+	// x1 = 0;
+    // y1 = 100;
+    // x2 = 0;
+    // y2 = 200;
+	// x1 = 0;
+	// y1 = 100;
+	// x2 = 100;
+	// y2 = 100;
+	// x1 = 
+	// y1 = 
+	coords[y1][x1].y = coords[y2][x2].y + 1 * (master->wsize / (master->ylen + 1));
+	coords[y1][x1].x = coords[y2][x2].x + 1 * (master->wsize / (master->xlen + 1));
+	if (yox == 0)
+		coords[y2][x2].y = coords[y2][x2].y + (master->wsize / (master->ylen + 1));
+	else
+		coords[y2][x2].x = coords[y2][x2].x + (master->wsize / (master->ylen + 1));
+	// y2 = coords[y2][x2].y + 1 * (master->wsize / (master->ylen + 1));
+	// x2 = coords[y2][x2].x + 1 * (master->wsize / (master->xlen + 1));
+	y2 = coords[y2][x2].y;
+	x2 = coords[y2][x2].x;
     int dx = x2 - x1;
     int dy = y2 - x1;
 				//printf("%d,%d,%d,%d\n", y, x, y, x + 100);
@@ -175,14 +193,10 @@ void draw(t_master *master, t_points **coords, int y11, int x11, int y22, int x2
 }
 
 
-int rotate(t_points ***coords, int degree, int x, int y)
-{
-	//rotate(&coords, 30, int x, int y);
+// int rotate(int key, t_points *coords)
+// {
 
-	// coords[y][x].x = sin(30) (coords[y][x].x - 
-	// coords[y][x].y = 
-	return (0);
-}
+// }
 
 
 int main(int ac, char **av)
@@ -191,53 +205,39 @@ int main(int ac, char **av)
 	t_master master;
 	int x;
 	int y;
+	master.wsize = 1000;
 	
 	if (ac == 2)
 	{
-		master.wsize = 1000;
-		master.xlen = 0;
+		//master.xlen = 0;
 		master.ylen = 0;
-		coords = points(av[1], &master); //added pointer
+		coords = points(av[1], &master);
 		master.mlx = mlx_init();
 		master.win = mlx_new_window(master.mlx, master.wsize, master.wsize, av[1]);
-		//x = 0;
-		y = 0;
-		while(y < master.ylen)
+		//adjust all coordinates to fit the screen equally
+		// master.ylen = 8;
+		// master.xlen = 6;
+		coords[0][0].x = coords[0][0].x + 1 * (master.wsize / (master.xlen + 1));
+		coords[0][0].y = coords[0][0].y + 1 * (master.wsize / (master.ylen + 1));
+		x = 0;
+		y = 0;//(master.wsize / (master.ylen + 1));
+		while(y+ 1 < master.ylen)//coords[y][x].y <= master.wsize / (master.ylen + 1) * (master.ylen))
 		{
-			x = 0;
-			while (x < (master.xlen))
+			x = 0;//(master.wsize / (master.xlen + 1));
+			while (x + 1 < master.xlen)//coords[y][x].x <= master.wsize / (master.xlen + 1) * (master.xlen))
 			{
-				coords[y][x].x = (x + 1) * (master.wsize / (master.xlen + 1));
-				coords[y][x].y = (y + 1) * (master.wsize / (master.ylen + 1));
-				rotate(&coords, 30, x, y);
-				x++;
+				if (coords[y][x].x + 1 * master.wsize / (master.xlen + 1) < master.wsize / (master.xlen + 1) * (master.xlen))
+					draw(&master, coords, y, x, y+1, x+1, 1);// + (master.wsize / (master.xlen + 1)));
+				if (coords[y][x].y + 1 * (master.wsize / (master.ylen + 1)) < master.wsize / (master.ylen + 1) * (master.ylen))
+					draw(&master, coords, y, x, y+1, x+1, 0);// + (master.wsize / (master.ylen + 1)), x);
+				x++;// += (master.wsize / (master.xlen + 1));
 			}
-			y++;
+			y++;// += (master.wsize / (master.ylen + 1));
 		}
-				//printf("%d, %d\n", master.ylen, master.xlen);
-		//		printf("(%d, %d) |\n", coords[1][1].y, coords[1][1].x);
-		y = 0;
-		while(y < master.ylen)
-		{
-			x = 0;
-			while (x < master.xlen)
-			{
-				//printf("(%d, %d) |\n", coords[y][x].y, coords[y][x].x);
-				if (x < (master.xlen)-1)
-				{
-					draw(&master, coords, y, x, y, x + 1);
-				}
-				if (y < (master.ylen)-1)
-					draw(&master, coords, y, x, y+1, x);
-				x++;
-			}
-			y++;
-		}
-		ft_putchar('\n');
 		// printf("x%d, xend %d\n", x, master.wsize / (master.xlen + 1) * master.xlen);
 		// printf("y%d, yend%d\n", y, master.wsize / (master.ylen + 1) * master.ylen);
 		mlx_hook(master.win, 2, 0, my_key_funct, &master); //much faster //master or master->win as last var
 		mlx_loop(master.mlx);
 	}
-	return (0);
+	//return (0);
 }
