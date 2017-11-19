@@ -6,77 +6,81 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 13:52:24 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 18:04:28 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 19:00:12 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		*znc(t_points **stmp, char **arr, int *len, int y)
+int			*znc(t_points **c, char **arr, int *len, int y)
 {
-	int x;
-	char **tmp;
+	int		x;
+	char	**tmp;
 
 	x = 0;
-	stmp[y][x].c = 1;
 	while (arr[x])
 	{
-		stmp[y][x].x = x;
-		stmp[y][x].y = y;
-
+		c[y][x].x = x;
+		c[y][x].y = y;
 		if (ft_strchr(arr[x], ','))
 		{
 			tmp = ft_strsplit(arr[x], ',');
-			stmp[y][x].z = (double)ft_atoi(tmp[0]);
-			stmp[y][x].c = ft_atoi_base(ft_strsub(tmp[1], 2, ft_strlen(tmp[1])), 16); //ft_atoi(tmp[1]); //or just the string
-			free(tmp);
+			c[y][x].z = (double)ft_atoi(tmp[0]);
+			c[y][x].c = ft_atoi_base(ft_strsub(tmp[1],
+										2, ft_strlen(tmp[1])), 16);
+			free_array(tmp);
 		}
 		else
 		{
-			stmp[y][x].z = (double)ft_atoi(arr[x]);
-			stmp[y][x].c = stmp[y][x].z * 6 + ft_atoi_base("000FFFFF", 16) - 256;
+			c[y][x].z = (double)ft_atoi(arr[x]);
+			c[y][x].c = c[y][x].z * 6 + ft_atoi_base("000FFFFF", 16) - 256;
 		}
-		stmp[y][x].rz = stmp[y][x].z;
+		c[y][x].rz = c[y][x].z;
 		x++;
 	}
 	return (0);
 }
 
-t_points **points(char *filename, t_master *master){
-	int		fd;
-	char	*line;
-	int		y;
-	t_points **twodstruct; //fix to find the right val
-	t_points **cpy;
-	int lentmp = 0;
-	int *xlen;
-	char *tmp;
+// void		gnlcheck(int fd, char **line, t_master *master, t_points ***twodstruct)
+// {
+// 	int y;
 
-//all this is to figut out the height of the file
-	if ((fd = open(filename, O_RDONLY)) == -1)
-		return (0);
+// 	y = 1;
+// 	while ((get_next_line(fd, line)))
+// 	{
+// 		*twodstruct[y] = (t_points*)malloc(sizeof(t_points) * master->xlen);
+// 		znc(*twodstruct, ft_strsplit(*line, ' '), &master->xlen, y);
+// 		y++;
+// 	}
+// 	return ;
+// }
+
+t_points	**points(char *filename, t_master *master)
+{
+	int			fd;
+	char		*line;
+	int			y;
+	t_points	**twodstruct;
+
+	RETURN(0, ((fd = open(filename, O_RDONLY)) == -1));
 	while (get_next_line(fd, &line))
 		(master->ylen)++;
 	close(fd);
 	twodstruct = (t_points**)malloc(sizeof(t_points*) * master->ylen);
-//////////////////
-
-	y = 1; //y use the tmp var for the first one at index 0
+	y = 1;
 	line = NULL;
-	if ((fd = open(filename, O_RDONLY)) == -1)
-		return (0);
-	get_next_line(fd, &line); //check to see if gnl runs
-	tmp = line;
-	master->xlen = ft_cntdelim(tmp, ' ');// + 1;
+	RETURN(0, ((fd = open(filename, O_RDONLY)) == -1));
+	get_next_line(fd, &line);
+	master->xlen = ft_cntdelim(line, ' ');
 	twodstruct[0] = (t_points*)ft_memalloc(sizeof(t_points) * master->xlen);
 	znc((t_points**)twodstruct, ft_strsplit(line, ' '), &master->xlen, 0);
+	//gnlcheck(fd, &line, master, &twodstruct);
 	while ((get_next_line(fd, &line)))
 	{
 		twodstruct[y] = (t_points*)malloc(sizeof(t_points) * master->xlen);
 		znc((t_points**)twodstruct, ft_strsplit(line, ' '), &master->xlen, y);
 		y++;
 	}
-	//free(twodstruct);
 	close(fd);
 	free(line);
 	return ((t_points**)twodstruct);

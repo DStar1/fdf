@@ -6,35 +6,41 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 13:48:44 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 13:49:22 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 19:10:56 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+void	rotscale(t_master *master)
+{
+	rotate_key(master);
+	scale(master);
+	return ;
+}
+
 int	my_key_funct(int keycode, t_master *master)
 {
 	if (keycode == 53)
 		exit(1);
-	if (keycode == 92) //9/right pressed
-	{
-		rotate_key(master);
-		scale(master);
-		master->yrot=master->yrot+1;
-		re_draw(master);
-	}
+	// if (keycode == 92) //9/right pressed
+	// {
+	// 	rotate_key(master);
+	// 	scale(master);
+	// 	master->yrot=master->yrot+1;
+	// 	re_draw(master);
+	// }
 		
-	if (keycode == 89) //7/left pressed
-	{
-		rotate_key(master);
-		scale(master);
-		master->yrot=master->yrot -1;
-		re_draw(master);
-	}
+	// if (keycode == 89) //7/left pressed
+	// {
+	// 	rotate_key(master);
+	// 	scale(master);
+	// 	master->yrot=master->yrot -1;
+	// 	re_draw(master);
+	// }
 	if (keycode == 126) //up pressed
 	{
-		rotate_key(master);
-		scale(master);
+		rotscale(&master);
 		master->xrot=master->xrot+1;
 		re_draw(master);
 	}
@@ -96,34 +102,22 @@ int	my_key_funct(int keycode, t_master *master)
 	return (0);
 }
 
-int	motion_hook(int keycode, t_master *master)
+int	my_key_funct2(int keycode, t_master *master)
 {
-	//printf("Key event %d\n", keycode);
-
-	//mlx_loop(master->mlx);
+	if (keycode == 92) //9/right pressed
+	{
+		rotate_key(master);
+		scale(master);
+		master->yrot=master->yrot+1;
+		re_draw(master);
+	}
+		
+	if (keycode == 89) //7/left pressed
+	{
+		rotate_key(master);
+		scale(master);
+		master->yrot=master->yrot -1;
+		re_draw(master);
+	}
 	return (0);
 }
-
-// int	mouse_press_hook(int keycode, t_master *master)
-// {
-// 	printf("Key event %d\n", keycode);
-// 	if (keycode == 1)
-// 		mlx_hook(master->win, 6, 0, motion_hook, master);
-// 	return (0);
-// }
-
-// int	mouse_press_hook(int keycode, t_master *master)
-// {
-// 	printf("Key event %d\n", keycode);
-// 	if (keycode == 1)
-// 		master->m_pressed = 1;
-// 	return (0);
-// }
-
-// int	mouse_release_hook(int keycode, t_master *master)
-// {
-// 	//printf("Key event %d\n", keycode);
-// 	if (keycode == 1)
-// 		master->m_pressed = 0;
-// 	return (0);
-// }

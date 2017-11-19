@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 20:15:38 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 18:03:32 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 19:09:23 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	scale(t_master *master);
 void applyto(t_master *master, double iter, char yox);
 int	my_key_funct(int keycode, t_master *master);
 void	re_draw(t_master *master);
+int	my_key_funct2(int keycode, t_master *master);
 
 #endif
