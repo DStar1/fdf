@@ -1,12 +1,19 @@
-NAME = mlx
+NAME = fdf
 
 LIBF = libft/
 
+LIB = mlx.a
+
 MAIN = main.c
 
-TEST = 10-2.fdf
+TEST = fdf1/maps/elem-col.fdf
 
-SRC =	$(MAIN)
+SRC =	rot.c \
+		parse.c \
+		scale.c \
+		keys.c \
+		draw.c \
+		$(MAIN)
 
 FLAGS = -Wall -Werror -Wextra
 
@@ -14,12 +21,14 @@ all: $(NAME)
 
 $(NAME):
 	make all -C libft
-	#gcc -g -o $(NAME) libft/libft.a $(SRC)
-	gcc minilibx/libmlx.a libft/libft.a main.c -framework OpenGL -framework AppKit
+	gcc -g -c $(SRC)
+	ar rc $(LIB) *.o
+	ranlib $(LIB)
+	gcc -g -o $(NAME) $(LIB) minilibx/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
 
 cmain:
 	gcc -g -o $(NAME) minilibx/libmlx.a libft/libft.a $(SRC) -framework OpenGL -framework AppKit
-	./mlx test_maps/$(TEST)
+	./$(NAME) $(TEST)
 
 clean:
 	/bin/rm -f *.o

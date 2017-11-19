@@ -69,6 +69,8 @@ SRC = 	ft_putchar.c \
 		ft_strjoin_clr_1st.c \
 		get_next_line.c \
 		ft_cntdelim.c \
+		ft_atoi_base.c \
+		ft_power.c \
 		ft_lstsize.c
 
 all: $(NAME)

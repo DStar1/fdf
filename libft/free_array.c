@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 17:07:02 by hasmith           #+#    #+#             */
-/*   Updated: 2017/10/18 17:07:12 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 15:40:51 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	free_array(char **array)
 		free(array[i]);
 		i++;
 	}
-	array = NULL;
+	free(array);
 }

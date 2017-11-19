@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 16:56:52 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/10 00:21:53 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 15:28:12 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 int					get_next_line(const int fd, char **line);
 int					ft_cntdelim(const char *str, int c);
+int					ft_power(int nb, int power);
+int					ft_atoi_base(char *nb, int base);
 
 #endif

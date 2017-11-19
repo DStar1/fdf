@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cntdelim.c                                      :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/10 00:17:53 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 15:30:03 by hasmith          ###   ########.fr       */
+/*   Created: 2017/11/17 12:35:53 by hasmith           #+#    #+#             */
+/*   Updated: 2017/11/17 12:36:10 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_cntdelim(const char *str, int c)
+int		ft_power(int nb, int power)
 {
-	int i;
-	int cnt;
-	int last;
-
-	last = 0;
-	i = 0;
-	cnt = 0;
-	while (str[i])
-	{
-		if (last == 0 && str[i] == c)
-		{
-			cnt++;
-			last = 1;
-		}
-		if (str[i] != c)
-			last = 0;
-		i++;
-	}
-	return (cnt);
+	if (power == 0)
+		return (1);
+	else if (power < 0)
+		return (0);
+	return (nb * ft_power(nb, power - 1));
 }
