@@ -21,10 +21,10 @@ all: $(NAME)
 
 $(NAME):
 	make all -C libft
-	gcc -g -c $(SRC)
+	gcc $(FALGS) -g -c $(SRC)
 	ar rc $(LIB) *.o
 	ranlib $(LIB)
-	gcc -g -o $(NAME) $(LIB) minilibx/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
+	gcc $(FALGS) -g -o $(NAME) $(LIB) minilibx/libmlx.a libft/libft.a -framework OpenGL -framework AppKit
 
 cmain:
 	gcc -g -o $(NAME) minilibx/libmlx.a libft/libft.a $(SRC) -framework OpenGL -framework AppKit

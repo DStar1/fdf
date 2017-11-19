@@ -6,86 +6,125 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 13:46:31 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 13:47:47 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 20:56:24 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void draw(t_master *master, int y11, int x11, int y22, int x22)
+void	allvs(t_master *master, t_vars *v)
 {
-////////////////////writes line to the screen//////////////////
-	double x1 = master->coords[y11][x11].x;
-	double y1 = master->coords[y11][x11].y;
-	double x2 = master->coords[y22][x22].x;
-	double y2 = master->coords[y22][x22].y;
-	// int x1 = 70;
-	// int y1 = 90;
-	// int x2 = 70;
-	// int y2 = 0;
-	
-	int numerator;
-	int longest;
-	int shortest;
-	int i;
-	int w;
-	int h;
-	i = 0;
-	w = x2 - x1;
-    h = y2 - y1;
-    double dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
-    if (w<0) dx1 = -1 ; else if (w>0) dx1 = 1;
-    if (h<0) dy1 = -1 ; else if (h>0) dy1 = 1;
-    if (w<0) dx2 = -1 ; else if (w>0) dx2 = 1;
-    longest = abs(w) ; //possibly create ft_abs function
-    shortest = abs(h) ;
-    if (!(longest>shortest))
+	v->x1 = master->coords[master->y11][master->x11].x;
+	v->y1 = master->coords[master->y11][master->x11].y;
+	v->x2 = master->coords[master->y22][master->x22].x;
+	v->y2 = master->coords[master->y22][master->x22].y;
+	v->c = master->coords[master->y22][master->x22].c;
+	v->i = 0;
+	v->w = v->x2 - v->x1;
+	v->h = v->y2 - v->y1;
+	v->dx1 = 0;
+	v->dy1 = 0;
+	v->dx2 = 0;
+	v->dy2 = 0;
+	return ;
+}
+
+void	checkif(t_vars *v)
+{
+	if (v->w < 0)
+		v->dx1 = -1;
+	else if (v->w > 0)
+		v->dx1 = 1;
+	if (v->h < 0)
+		v->dy1 = -1;
+	else if (v->h > 0)
+		v->dy1 = 1;
+	if (v->w < 0)
+		v->dx2 = -1;
+	else if (v->w > 0)
+		v->dx2 = 1;
+	v->longest = abs(v->w);
+	v->shortest = abs(v->h);
+	if (!(v->longest > v->shortest))
 	{
-        longest = abs(h);
-        shortest = abs(w);
-        if (h<0) dy2 = -1 ; else if (h>0) dy2 = 1;
-        dx2 = 0 ;
-    }
-    numerator = longest >> 1;
-    while (i<=longest)
+		v->longest = abs(v->h);
+		v->shortest = abs(v->w);
+		if (v->h < 0)
+			v->dy2 = -1;
+		else if (v->h > 0)
+			v->dy2 = 1;
+		v->dx2 = 0;
+	}
+	return ;
+}
+
+void	draw(t_master *master, t_vars *v)
+{
+	allvs(master, v);
+	checkif(v);
+	v->numerator = v->longest >> 1;
+	while (v->i <= v->longest)
 	{
-        mlx_pixel_put(master->mlx, master->win, x1, y1, master->coords[y11][x11].c);//0x000FFFFF);
-        numerator += shortest;
-        if (!(numerator<longest))
+		mlx_pixel_put(master->mlx, master->win, v->x1, v->y1, v->c);
+		v->numerator += v->shortest;
+		if (!(v->numerator < v->longest))
 		{
-            numerator -= longest;
-            x1 += dx1;
-            y1 += dy1;
-        }
-		else {
-            x1 += dx2;
-            y1 += dy2;
-        }
-		i++;
-    }
+			v->numerator -= v->longest;
+			v->x1 += v->dx1;
+			v->y1 += v->dy1;
+		}
+		else
+		{
+			v->x1 += v->dx2;
+			v->y1 += v->dy2;
+		}
+		v->i++;
+	}
+	return ;
+}
+
+void	xandy(t_master *master, int y11, int x11, char yox)
+{
+	master->x11 = x11;
+	master->y11 = y11;
+	if (yox == 'x')
+	{
+		master->x22 = x11 + 1;
+		master->y22 = y11;
+	}
+	else if (yox == 'y')
+	{
+		master->x22 = x11;
+		master->y22 = y11 + 1;
+	}
 	return ;
 }
 
 void	re_draw(t_master *master)
 {
-	int y;
-	int x;
-	y = 0;
+	int		y;
+	int		x;
+	t_vars	v;
 
 	mlx_clear_window(master->mlx, master->win);
 	y = 0;
-	while(y < master->ylen)
+	while (y < master->ylen)
 	{
 		x = 0;
 		while (x < master->xlen)
 		{
-			if (x < (master->xlen)-1)
-				draw(master, y, x, y, x + 1);
-			if (y < (master->ylen)-1)
-				draw(master, y, x, y + 1, x);
+			if (x < (master->xlen) - 1)
+			{
+				xandy(master, y, x, 'x');
+				draw(master, &v);
+			}
+			if (y < (master->ylen) - 1)
+			{
+				xandy(master, y, x, 'y');
+				draw(master, &v);
+			}
 			x++;
 		}
 		y++;
 	}
-	return ;
 }

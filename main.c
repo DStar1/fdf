@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 13:48:05 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 19:06:21 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 19:20:22 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		main(int ac, char **av)
 		scale(&master);
 		re_draw(&master);
 		mlx_hook(master.win, 2, 0, my_key_funct, &master);
-		mlx_hook(master.win, 2, 0, my_key_funct2, &master);
+		//mlx_hook(master.win, 3, 0, my_key_funct2, &master);
 		mlx_loop(master.mlx);
 	}
 	return (0);
