@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 13:48:05 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 19:20:22 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 23:06:23 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,29 @@
 
 int		main(int ac, char **av)
 {
-	t_master	master;
+	t_master	m;
 	int			x;
 	int			y;
 
 	if (ac == 2)
 	{
-		master.yrot = 583;
-		master.xrot = 0;
-		master.wsize = 1000;
-		master.xlen = 0;
-		master.ylen = 0;
-		master.yiter = 0;
-		master.xiter = 0;
-		master.scale = 1;
-		master.coords = points(av[1], &master);
-		master.mlx = mlx_init();
-		master.win = mlx_new_window(master.mlx,
-							master.wsize, master.wsize, av[1]);
-		rotate_key(&master);
-		scale(&master);
-		re_draw(&master);
-		mlx_hook(master.win, 2, 0, my_key_funct, &master);
-		//mlx_hook(master.win, 3, 0, my_key_funct2, &master);
-		mlx_loop(master.mlx);
+		m.yrot = 583;
+		m.xrot = 0;
+		m.wsize = 1000;
+		m.xlen = 0;
+		m.ylen = 0;
+		m.yiter = 0;
+		m.xiter = 0;
+		m.scale = 1;
+		m.coords = points(av[1], &m);
+		m.mlx = mlx_init();
+		m.win = mlx_new_window(m.mlx, m.wsize, m.wsize, av[1]);
+		EXIT(m.wsize <= 0);
+		rotate_key(&m);
+		scale(&m);
+		re_draw(&m);
+		mlx_hook(m.win, 2, 0, my_key_funct, &m);
+		mlx_loop(m.mlx);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/22 16:56:52 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 15:28:12 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 21:28:29 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # define BUFF_SIZE 10
+# define EXIT(x) if (x) {exit(1);}
 # define RETURN(y, x) if (x) {return (y);}
 
 typedef struct		s_list

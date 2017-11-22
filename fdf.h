@@ -6,7 +6,7 @@
 /*   By: hasmith <hasmith@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 20:15:38 by hasmith           #+#    #+#             */
-/*   Updated: 2017/11/18 20:41:28 by hasmith          ###   ########.fr       */
+/*   Updated: 2017/11/18 22:46:11 by hasmith          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ typedef struct		s_vars
 	int				x22;
 	int				y22;
 	int				c;
-	// double			z;
-	// double			rz;
-	// int				c;
 	void			*content;
 	struct s_vars	*next;
 }					t_vars;
@@ -62,6 +59,7 @@ typedef struct		s_master
 	void			*win;
 	int				ylen;
 	int				xlen;
+	int				xcheck;
 	double			yrot;
 	double			zrot;
 	double			xrot;
@@ -72,6 +70,7 @@ typedef struct		s_master
 	int				y11;
 	int				x22;
 	int				y22;
+	int				j;
 	int				m_pressed;
 	t_points		**coords;
 	int				wsize;

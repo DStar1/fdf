@@ -33,6 +33,7 @@ cmain:
 clean:
 	/bin/rm -f *.o
 	make clean -C libft
+	/bin/rm -f $(LIB)
 
 fclean: clean
 	make fclean -C libft
